@@ -21,6 +21,31 @@ const CreatePin = ( { user }) => {
 
   const navigate = useNavigate();
 
+  const uploadImage = (e) =>{
+    const {type, name} = e.target.file[0];
+
+    if(type === 'image/png' || type === 'image/jpeg' || type === "image/gif" || type === "image/tiff"){
+      setWrongImagetype(false);
+      setLoading(true);
+
+      client.assets
+      .upload('image', e.target.file[0], {contentType: type, filename: name })
+      .then((document) =>{
+        setImageAsset(document);
+        setLoading(false);
+      })
+      .catch((error) =>{
+        console.log('Image upload error', error)
+
+      })
+
+    }else{
+      setWrongImagetype(true);
+    }
+
+
+  }
+
 
 
   return (
@@ -43,14 +68,39 @@ const CreatePin = ( { user }) => {
                     <AiOutlineCloudUpload />
 
                   </p>
+                  <p className='text-lg'>Click to Upload</p>
 
                 </div>
+                <p className='mt-32 text-gray-400'>
+                  Use high-quality JPG, SVG, PNG, GIF less than 20 MB
+                </p>
 
               </div>
+              <input 
+                type='file'
+                name='uplaod-image'
+                onChange={uploadImage}
+                className='w-0 h-0'
+                
+
+              />
+
+
+              
             </label>
 
           ) :(
-            <p>something else</p>
+            <div className='relative h-full'>
+              <img src={imageAsset?.url} alt="uplaoded-pic" className='h-full w-full' />
+              <button
+                type='button'
+                className='absolute bottom-3 right-3 p-3 rounded-full bg-white text-xl cursor- pointer outline-none hover:shadow-md transition-all duration-500 ease-in-out'
+                onClick={() => setImageAsset(null)}
+              >
+
+
+              </button>
+            </div>
           )}
         </div>
 
