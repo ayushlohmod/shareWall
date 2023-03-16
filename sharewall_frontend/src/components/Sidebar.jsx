@@ -4,18 +4,13 @@ import { RiHomeFill } from 'react-icons/ri'
 import { IoIosArrowForwars } from 'react-icons/io'
 
 import logo from '../Assets/wallpaper.png';
+import { categories } from '../utils/data';
 
 const isNotActiveStyle = "flex items-center px5 gap-3 text-gray-500 hover:text-black transition-all durarion-200 ease-in-out capitalize "
 const isActiveStyle = "flex items-center px5 gap-3 font-extrabold border-r-2 border-black transition-all durarion-200 ease-in-out capitalize "
-const categories = [
-    {name: "Animals"},
-    {name: "wallpapers"},
-    {name: "photos"},
-    {name: "gaming"},
-    {name: "coding"},
-    {name: "other"},
 
-]
+
+
 
 
 const Sidebar = ({user, closeToggel}) => {
@@ -48,6 +43,7 @@ const Sidebar = ({user, closeToggel}) => {
                     onClick={handelCloseSidebar}
                     key={categories.name}
                     >
+                    <img src={categories.image} className='w-8 h-8 rounded-full shadow-sm' alt='category'/>
                     {categories.name}
                     </NavLink>
                  ))}
