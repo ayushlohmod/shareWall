@@ -7,7 +7,7 @@ import { Sidebar, UserProfile } from '../components';
 import Pins from './Pins';
 import { userQuery } from '../utils/data';
 import { client } from '../client';
-import logo from '../Assets/wallpaper.png'
+import logo from '../Assets/image.png'
 import { fetchUser } from '../utils/fetchUser';
 
 
