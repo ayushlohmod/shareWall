@@ -20,7 +20,7 @@ const Home = () => {
   const userInfo = fetchUser();
   
 useEffect(() => {
- const query = userQuery(userInfo?.googleId);
+ const query = userQuery(userInfo?.sub);
 
  client.fetch(query)
  .then((data) =>{
@@ -54,8 +54,9 @@ useEffect(() => {
       <div className='fixed w-4/5 bg-white h-screen overflow-y-auto shadow-md z-10 animate-slide-in'>
         <div className='absolute w-full flex justify-end items-center p-2'>
           <AiFillCloseCircle fontSize={30} className='cursor-pointer' onClick={() => setToggleSidebar(false)} />
+          
         </div>
-        <Sidebar  user={user && user} closeToggle={setToggleSidebar} />
+        <Sidebar closeToggle={setToggleSidebar} user={user && user} />
       </div>
     )}
     </div>
