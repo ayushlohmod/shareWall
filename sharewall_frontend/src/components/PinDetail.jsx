@@ -1,71 +1,59 @@
 import React, { useState, useEffect} from 'react'
 import { MdDownloadForOffline } from 'react-icons/md'
-import { Form, Link, useParams } from 'react-router-dom'
+import {  Link, useParams } from 'react-router-dom'
 import { v4 as uuidv4 } from 'uuid'
 
 import { client, urlFor } from '../client'
 import MasonryLayout from './MasonryLayout'
-import { pinDetailQuery, PinDetailMorepinQuery, pinDetailMorePinQuery } from '../utils/data'
+import { pinDetailQuery, pinDetailMorePinQuery } from '../utils/data'
 import Spinner from './Spinner'
-import { HiPaperClip } from 'react-icons/hi'
 
 
-const PinDeatail = ({user}) => {
-  const [pins, setPins] = useState(null)
-  const [pinDetail, setPinDetail] = useState(null)
-  const [comment, setComment] = useState('')
-  const [addingComment, setAddingComment] = useState(false)
-  const {pinId} = useParams();
 
-  const addComment = () =>{
-    if(comment){
+const PinDetail = ({ user }) => {
+  const { pinId } = useParams();
+  const [pins, setPins] = useState();
+  const [pinDetail, setPinDetail] = useState();
+  const [comment, setComment] = useState('');
+  const [addingComment, setAddingComment] = useState(false);
+
+  const fetchPinDetails = () => {
+    const query = pinDetailQuery(pinId);
+
+    if (query) {
+      client.fetch(`${query}`).then((data) => {
+        setPinDetail(data[0]);
+        console.log(data);
+        if (data[0]) {
+          const query1 = pinDetailMorePinQuery(data[0]);
+          client.fetch(query1).then((res) => {
+            setPins(res);
+          });
+        }
+      });
+    }
+  };
+
+  useEffect(() => {
+    fetchPinDetails();
+  }, [pinId]);
+
+  const addComment = () => {
+    if (comment) {
       setAddingComment(true);
 
       client
-      .patch(pinId)
-      .setIfMissing({ comment: []})
-      .insert( 'after', 'comments[-1]', [{
-        comment, 
-        _key:uuidv4(),
-        postedBy : {
-          _type: 'postedBy',
-          _ref: user
-        }
-      
-      }])
-      .commit()
-      .then(()=>{
-        fetchPinDetail();
-        setComment('');
-        setAddingComment(false)
-      }) 
+        .patch(pinId)
+        .setIfMissing({ comments: [] })
+        .insert('after', 'comments[-1]', [{ comment, _key: uuidv4(), postedBy: { _type: 'postedBy', _ref: user._id } }])
+        .commit()
+        .then(() => {
+          fetchPinDetails();
+          setComment('');
+          setAddingComment(false);
+        });
     }
   }
-
-  const fetchPinDetail = () =>{
-    let query = pinDetailQuery(pinId)
-
-    if(query){
-      client.fetch(query)
-      .then((data) =>{
-        setPinDetail(data[0]);
-
-        if(data[0]){
-          query = pinDetailMorePinQuery(data[0])
-
-          client.fetch(query)
-          .then((res) => setPins(res))
-        }
-      })
-    }
-
-
-  }
-
-  useEffect(() => {
-    fetchPinDetail()
-
-  }, [pinId])
   
 
   if(!pinDetail) return <Spinner message='Loading pin...'/>
@@ -178,4 +166,4 @@ const PinDeatail = ({user}) => {
   )
 }
 
-export default PinDeatail
+export default PinDetail
