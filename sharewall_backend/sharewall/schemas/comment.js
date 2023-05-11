@@ -7,12 +7,12 @@ export default{
         {
             name: 'postedBy',
             title: 'PostedBy',
-            type: 'postedBy'
+            type: 'postedBy',
         },
         {
             name: 'comment',
             title: 'Comment',
-            type: 'string'
+            type: 'string',
         },
     ]
-}
+};
