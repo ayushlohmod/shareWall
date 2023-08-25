@@ -67,7 +67,7 @@ This will start the development server on http://localhost:3000/.
 
 ## Contributing
 
-If you'd like to contribute to Grabtern Frontend:-
+If you'd like to contribute to ShareWall:-
 
 - If you have suggestions for adding or removing projects, feel free to [open an issue](https://github.com/ayushlohmod/ShareWall/issues/new) to discuss it, or directly create a pull request after you edit the _README.md_ file with necessary changes.
 - Please make sure you check your spelling and grammar.
