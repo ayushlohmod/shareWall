@@ -2,12 +2,11 @@
 <h1 align="center"> ShareWall</h1>
 ShareWall is a social media app where you can upload and download photos a web application built with MERN STACK
 <br>
-
-<div align="center">
-![ShareWall](https://github.com/ayushlohmod/100-days-of-code/blob/main/img/Screenshot%202023-05-08%20at%203.11.12%20PM.png)
-</div>
 </br>
- 
+ <div align="center">
+ <img src="https://github.com/ayushlohmod/100-days-of-code/blob/main/img/Screenshot%202023-05-08%20at%203.11.12%20PM.png"</img>
+
+</div>
  
 ## Table of Contents
 
